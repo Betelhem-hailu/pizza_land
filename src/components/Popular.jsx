@@ -9,22 +9,27 @@ import {
   Divider,
   Avatar,
 } from "@mui/material";
-import hero_picture from "../assets/hero-img.png";
-
-const pizzas = [
-  {
-    id: 1,
-    name: "Margherita",
-    price: "150",
-    toppings: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-    image: "pizza_image_url",
-    restaurantName: "Pizza Palace",
-    restaurantImage: "https://your-avatar-url.com"
-  },
-  // Add more pizzas here
-];
+import { useEffect } from "react";
+import { useNavigate  } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getPopularMenus } from "../slices/menu.slice";
 
 const Popular = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate ();
+  const { popularData } = useSelector((state) => state.menu);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        dispatch(getPopularMenus());
+      } catch (error) {
+        console.error("Error fetching menu:", error);
+      }
+    };
+    fetchMenu();
+  }, [dispatch]);
+
   return (
     <Box
       style={{
@@ -52,7 +57,7 @@ const Popular = () => {
           margin: "0 auto",
         }}
       >
-        {pizzas.map((pizza) => (
+        {popularData.map((pizza) => (
           <Grid item xs={12} sm={6} md={4} key={pizza.id}>
             <Card
               sx={{
@@ -67,17 +72,20 @@ const Popular = () => {
             >
               <Box
                 sx={{
-                  width: "318",
-                  height: "318",
+                  width: "318px",
+                  height: "318px",
                   backgroundColor: "#EA810033",
                   borderRadius: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <CardMedia
                   component="img"
-                  image={hero_picture}
+                  image={pizza.image}
                   alt={pizza.name}
-                  style={{ width: "100%" }}
+                  style={{ width: "272px", objectFit: "cover" }}
                 />
               </Box>
               <CardContent>
@@ -106,7 +114,7 @@ const Popular = () => {
                     marginTop: "10px",
                   }}
                 >
-                  {pizza.toppings}
+                  {pizza.toppings.join(", ")}
                 </Typography>
                 <Box
                   sx={{
@@ -146,7 +154,6 @@ const Popular = () => {
                   <Button
                     type="submit"
                     variant="contained"
-                    color="primary"
                     style={{
                       marginTop: "20px",
                       width: "188px",
@@ -156,40 +163,46 @@ const Popular = () => {
                       fontFamily: "Roboto",
                       fontWeight: 700,
                       textTransform: "capitalize",
-                      borderRadius: "10px"
+                      borderRadius: "10px",
+                    }}
+                    onClick={() => {
+                      navigate("/pizzaorder", {state:{ id: pizza.id }});
                     }}
                   >
                     Order
                   </Button>
                 </Box>
-                <Divider  flexItem />
+                <Divider flexItem />
                 <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginTop: "10px",
-                  gap: "30px",
-                }}>
-                <Avatar
-                      src={pizza.restaurantImage}
-                      alt={pizza.restaurantName}
-                      sx={{ width: 50, height: 50 }}
-                    />
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        fontFamily: "Roboto",
-                        fontSize: "20px",
-                        fontWeight: 700,
-                        lineHeight: "18.94px",
-                        letterSpacing: "0.03em",
-                        textAlign: "left",
-                      }}
-                    >
-                      {pizza.restaurantName}
-                    </Typography>
+                  key={pizza.restaurant.id}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: "10px",
+                    gap: "30px",
+                  }}
+                >
+                  <Avatar
+                    src={pizza.restaurant.logo}
+                    alt={pizza.restaurant.name}
+                    sx={{ width: 50, height: 50 }}
+                  />
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontFamily: "Roboto",
+                      fontSize: "20px",
+                      fontWeight: 700,
+                      lineHeight: "18.94px",
+                      letterSpacing: "0.03em",
+                      textAlign: "left",
+                    }}
+                  >
+                    {pizza.restaurant.name}
+                  </Typography>
                 </Box>
+                {/* ))} */}
               </CardContent>
             </Card>
           </Grid>

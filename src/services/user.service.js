@@ -2,11 +2,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 const API_URI = "http://localhost:8001/pizza";
 const register = formData => {
-  return axios.post(API_URI + "/registerCustomer", formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    }
-  }).then(response => {
+  return axios.post(API_URI + "/registerCustomer", formData).then(response => {
     return response.data;
   }).catch(error => {
     if (error.response && error.response.status === 409) {

@@ -1,32 +1,23 @@
 import PizzaLogo from "../assets/pizza-logo.png";
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import {useState} from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
-const pages = ['Home', 'Orders', 'Who we are'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ["Home", "Orders", "Who we are"];
 
 function Header() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [activePage, setActivePage] = React.useState('');
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [activePage, setActivePage] = useState("");
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -35,36 +26,40 @@ function Header() {
 
   const handleClick = (page) => {
     setActivePage(page);
-    handleCloseNavMenu(); // Ensure menu closes if necessary
+    navigate("/" + `${page.toLowerCase()}`);
+    handleCloseNavMenu();
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
-    <AppBar position="static" sx={{
-        backgroundColor: "white",
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "transparent",
         color: "black",
-        height: "80px",
-        boxShadow: "7px 0px 15px 0px #0000000D",
-      }}>
+        height: "75px",
+        boxShadow: "0px 0px 15px 0px #FF810033",
+      }}
+    >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Toolbar
+          disableGutters
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <Avatar
-            variant="square"
-            src={PizzaLogo}
-            sx={{ width: 50, height: 50 }}
+              variant="square"
+              src={PizzaLogo}
+              sx={{ width: 50, height: 50 }}
             />
             <Typography
-            gutterBottom
-            color="#AF5901"
-            sx={{ fontWeight: "600", fontSize:"25px", marginLeft: "15px" }}
+              gutterBottom
+              color="#AF5901"
+              sx={{ fontWeight: "600", fontSize: "25px", marginLeft: "15px" }}
             >
-            Pizza
+              Pizza
             </Typography>
-        </Box>
+          </Box>
 
           {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -101,7 +96,6 @@ function Header() {
             </Menu>
           </Box> */}
 
-
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -122,12 +116,26 @@ function Header() {
             LOGO
           </Typography> */}
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+            }}
+          >
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={() => handleClick(page)}
-                sx={{ my: 2, mx: 4, color: activePage === page ? '#AF5901' : 'black', display: 'block', fontFamily: "Inter", fontSize: "25px", textTransform: "capitalize" }}
+                sx={{
+                  my: 2,
+                  mx: 4,
+                  color: activePage === page ? "#AF5901" : "black",
+                  display: "block",
+                  fontFamily: "Inter",
+                  fontSize: "25px",
+                  textTransform: "capitalize",
+                }}
               >
                 {page}
               </Button>
@@ -135,41 +143,17 @@ function Header() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-                <Tooltip>
-                <Button
-                type="submit"
+              <Button
                 variant="contained"
-                color="primary"
-                style={{ marginTop: '20px', width: "168px", height: "56px", backgroundColor: "#FF890F" }}
+                style={{
+                  width: "168px",
+                  height: "50px",
+                  backgroundColor: "#FF890F",
+                }}
+                onClick={()=>{navigate('/register')}}
               >
                 Register
               </Button>
-                {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton> */}
-                </Tooltip>
-                <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-                >
-                {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                    </MenuItem>
-                ))}
-                </Menu>
           </Box>
         </Toolbar>
       </Container>

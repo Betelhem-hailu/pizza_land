@@ -1,0 +1,30 @@
+@keyframes rollIn {
+    0% {
+      opacity: 0;
+      transform: translateX(100%) rotate(90deg); /* Start off-screen to the right */
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) rotate(0); /* Roll into place */
+    }
+  }
+  
+  @keyframes rollOut {
+    0% {
+      opacity: 1;
+      transform: translateX(0) rotate(0); /* Start in place */
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-100%) rotate(-90deg); /* Roll out to the left */
+    }
+  }
+  
+  .roll-in {
+    animation: rollIn 1s ease-out forwards;
+  }
+  
+  .roll-out {
+    animation: rollOut 1s ease-in forwards;
+  }
+  

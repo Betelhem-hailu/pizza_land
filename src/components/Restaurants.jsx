@@ -1,35 +1,24 @@
 import { Card, CardContent, Typography, Avatar, Box } from "@mui/material";
 import BatteryCharging80Icon from "@mui/icons-material/BatteryCharging80";
+import { useDispatch, useSelector } from "react-redux";
+import { getTopRestaurants } from "../slices/menu.slice";
+import { useEffect } from "react";
 
-const restaurants = [
-  {
-    id: 1,
-    name: "Azmera Pizza",
-    image: "https://your-avatar-url.com", // replace with actual avatar URL
-    description:
-      "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to...",
-    orders: "2K",
-  },
-  {
-    id: 2,
-    name: "Bella Pizza",
-    image: "https://your-avatar-url.com", // replace with actual avatar URL
-    description:
-      "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to...",
-    orders: "3K",
-  },
-  {
-    id: 3,
-    name: "Pizza Palace",
-    image: "https://your-avatar-url.com", // replace with actual avatar URL
-    description:
-      "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to...",
-    orders: "1.5K",
-  },
-  // Add more restaurants as needed
-];
 
 const Restaurants = () => {
+  const dispatch = useDispatch();
+  const { topRestaurants } = useSelector(state => state.menu);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        dispatch(getTopRestaurants());
+      } catch (error) {
+        console.error("Error fetching menu:", error);
+      }
+    };
+    fetchMenu();
+  }, [dispatch]);
   return (
     <Box
       sx={{
@@ -70,7 +59,7 @@ const Restaurants = () => {
         }}
       >
         {/* Map through restaurants and display them */}
-        {restaurants.map((restaurant) => (
+        {topRestaurants.map((restaurant) => (
           <Box
             key={restaurant.id}
             sx={{
@@ -110,7 +99,7 @@ const Restaurants = () => {
                     }}
                   >
                     <Avatar
-                      src={restaurant.image}
+                      src={restaurant.logo}
                       alt={restaurant.name}
                       sx={{ width: 50, height: 50 }}
                     />
@@ -139,7 +128,7 @@ const Restaurants = () => {
                       color: "#00000080",
                     }}
                   >
-                    {restaurant.description}
+                    {restaurant.location}
                   </Typography>
                 </Box>
                 <Box
@@ -179,7 +168,7 @@ const Restaurants = () => {
                         textAlign: "left",
                       }}
                     >
-                      {restaurant.orders}
+                      {restaurant.ordersCount}
                     </span>
                   </Typography>
                 </Box>
