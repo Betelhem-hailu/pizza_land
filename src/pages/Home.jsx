@@ -9,7 +9,8 @@ const Home = () => {
     <Restaurants />
     <Popular />
     <Fasting />
-    <Footer /></div>
+    <Footer /> 
+    </div>
   )
 }
 

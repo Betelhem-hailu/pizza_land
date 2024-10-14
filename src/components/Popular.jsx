@@ -32,38 +32,43 @@ const Popular = () => {
 
   return (
     <Box
-      style={{
-        padding: "89px 77px",
+      sx={{
+        padding: {
+          xs: "0px 20px",   // padding for extra small screens (mobile)
+          sm: "0px 40px",   // padding for small screens (small tablets)
+          md: "0px 40px",   // padding for medium screens (tablets)
+          lg: "89px 77px",   // padding for large screens (laptops and desktops)
+          xl: "89px 77px",  // padding for extra large screens
+        },
         backgroundColor: "#FFF8F1",
       }}
     >
       <Typography
         variant="h5"
         gutterBottom
-        style={{
+        sx={{
           color: "#00000080",
-          fontSize: "50px",
+          fontSize: {xs:"25px", sm: "25px", md: "50px"},
           fontFamily: "Inter",
-          marginTop: "20px",
         }}
       >
         Popular Pizzas
       </Typography>
       <Grid
         container
-        spacing={3}
+        spacing={{ xs: 2, sm: 3, md: 4 }}
         sx={{
-          padding: "20px",
+          padding: {xs: "5px", sm: "5px", md:"20px"},
           margin: "0 auto",
         }}
       >
         {popularData.map((pizza) => (
-          <Grid item xs={12} sm={6} md={4} key={pizza.id}>
+          <Grid item xs={12} sm={12} md={6} lg={4} key={pizza.id}>
             <Card
               sx={{
                 backgroundColor: "#FFFFFF",
-                width: "387px",
-                height: "621px",
+                maxWidth: "387px",
+                height: "auto",
                 padding: "30px",
                 gap: "15px",
                 borderRadius: "25px",
@@ -72,8 +77,8 @@ const Popular = () => {
             >
               <Box
                 sx={{
-                  width: "318px",
-                  height: "318px",
+                  width: {xs:"233px" ,sm:"233px", md:"318px"},
+                  height: {xs:"233px" ,sm: "233px", md:"318px"},
                   backgroundColor: "#EA810033",
                   borderRadius: "100%",
                   display: "flex",
@@ -85,7 +90,7 @@ const Popular = () => {
                   component="img"
                   image={pizza.image}
                   alt={pizza.name}
-                  style={{ width: "272px", objectFit: "cover" }}
+                  sx={{ width: {xs:"200px", sm:"200px", md:"272px"}, objectFit: "cover" }}
                 />
               </Box>
               <CardContent>
@@ -130,6 +135,8 @@ const Popular = () => {
                   <Typography
                     variant="subtitle1"
                     sx={{
+                      display: "flex",
+                      alignItems: "flex-start",
                       marginTop: "10px",
                       color: "#01C550",
                       fontFamily: "Roboto",
@@ -146,6 +153,8 @@ const Popular = () => {
                         color: "#000",
                         fontSize: "15px",
                         fontWeight: 400,
+                        alignSelf: "flex-start",
+                        lineHeight: "1",
                       }}
                     >
                       Birr
@@ -154,10 +163,10 @@ const Popular = () => {
                   <Button
                     type="submit"
                     variant="contained"
-                    style={{
+                    sx={{
                       marginTop: "20px",
-                      width: "188px",
-                      height: "66px",
+                      width: {sm: "169px" ,md:"188px"},
+                      height: {sm: "56px", md:"66px"},
                       backgroundColor: "#FF890F",
                       fontSize: "24px",
                       fontFamily: "Roboto",
@@ -202,7 +211,6 @@ const Popular = () => {
                     {pizza.restaurant.name}
                   </Typography>
                 </Box>
-                {/* ))} */}
               </CardContent>
             </Card>
           </Grid>

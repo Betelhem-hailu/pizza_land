@@ -18,7 +18,8 @@ const Footer = () => {
         sx={{
           backgroundColor: "#d1b892",
           color: "#000",
-          padding: 5,
+          // padding: 5,
+          padding: {xs: "20px 35px", sm: "20px 35px", md: "20px 35px"},
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -28,11 +29,11 @@ const Footer = () => {
         {/* Left Section */}
 
         {/* Middle Links */}
-        <Box sx={{ display: "flex", gap: 3 }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
           <Link href="#" color="inherit" underline="none"
           sx={{
             fontFamily: "Inter",
-            fontSize: "25px",
+            fontSize: { sm:"15px", md:"25px"},
             fontWeight: 600,
             lineHeight: "36.17px",
             letterSpacing: "0.03em",
@@ -43,7 +44,7 @@ const Footer = () => {
           <Link href="#" color="inherit" underline="none"
           sx={{
             fontFamily: "Inter",
-            fontSize: "25px",
+            fontSize: { sm:"15px", md:"25px"},
             fontWeight: 600,
             lineHeight: "36.17px",
             letterSpacing: "0.03em",
@@ -54,7 +55,7 @@ const Footer = () => {
           <Link href="#" color="inherit" underline="none" 
           sx={{
             fontFamily: "Inter",
-            fontSize: "25px",
+            fontSize: { sm:"15px", md:"25px"},
             fontWeight: 600,
             lineHeight: "36.17px",
             letterSpacing: "0.03em",
@@ -69,7 +70,7 @@ const Footer = () => {
             <Avatar
               variant="square"
               src={PizzaLogo}
-              sx={{ width: 50, height: 50 }}
+              sx={{ width: {sm:25, md:50}, height: {sm:25, md:50} }}
             />
             <Typography variant="h6" component="div" color="#AF5901"
             sx={{ fontWeight: "600", fontSize:"20px", marginLeft: "10px" }}>
@@ -83,7 +84,7 @@ const Footer = () => {
               "& .MuiInputBase-root": {
               backgroundColor: "#fff",
               borderRadius: 5,
-              width: "423px",
+              width: {sm: "206px", md:"423px"},
               height: "60px",
               minWidth: 250,
               "& fieldset": {
@@ -111,17 +112,20 @@ const Footer = () => {
           />
         </Box>
       </Box>
+
       <Box sx={{
         backgroundColor: "#000000",
         color: "#ffffff",
         padding: 5,
         display: "flex",
         justifyContent: "space-between",
+        flexDirection: {xs:"column", sm: "column", md:"row" }
       }}>
         <Box sx={{
           display: "flex",
           alignItems: "center",
           gap: 5,
+          flexDirection: {xs:"column",sm: "column", md:"row" }
         }}>
         <Typography variant="body1">
           © 2024 Pizza All Rights Reserved.

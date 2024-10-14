@@ -4,6 +4,7 @@ const API_URI = "http://localhost:8001/pizza";
 
 //place order
 const placeOrder = (order) => {
+  console.log(order);
   return axios
     .post(API_URI + "/placeOrder", order, { withCredentials: true })
     .then((response) => {
@@ -14,9 +15,9 @@ const placeOrder = (order) => {
 //get order history
 const getOrderHistory = () => {
   return axios
-    .get(API_URI + "/getOrderHistory", { withCredentials: true })
+    .get(API_URI + "/orderhistory", { withCredentials: true })
     .then((response) => {
-      return response.data;
+      return response.data.orders;
     });
 };
 

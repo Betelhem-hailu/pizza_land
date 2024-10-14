@@ -5,6 +5,7 @@ import orderService from "../services/order.service";
 export const placeOrder = createAsyncThunk(
   "order/placeOrder",
   async (order, { rejectWithValue }) => {
+    console.log(order);
     try {
         const response = await orderService.placeOrder(order);
         return response;

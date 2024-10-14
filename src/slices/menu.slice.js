@@ -73,6 +73,7 @@ const menuSlice = createSlice({
       })
       .addCase(getMenuById.fulfilled, (state, { payload }) => {
         state.data = payload;
+        state.loading= false;
       })
       .addCase(getMenuById.rejected, (state, { payload }) => {
         state.error = payload;

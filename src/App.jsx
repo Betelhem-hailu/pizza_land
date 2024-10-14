@@ -20,7 +20,7 @@ function App() {
         <Route path="/pizzaorder" element={<PizzaOrder />} />
         <Route path="/orders" element={<OrderHistory />} />
         <Route path="/home" element={<Home />} />
-        </Routes>
+      </Routes>
       <CssBaseline />
     </ThemeProvider>
   )

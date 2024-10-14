@@ -1,5 +1,5 @@
 import PizzaLogo from "../assets/pizza-logo.png";
-import {useState} from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,6 +8,9 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { IconButton, Menu } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useSelector } from "react-redux";
 
 const pages = ["Home", "Orders", "Who we are"];
 
@@ -15,6 +18,11 @@ function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [activePage, setActivePage] = useState("");
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
+  const userInitials = user && user?.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -29,7 +37,6 @@ function Header() {
     navigate("/" + `${page.toLowerCase()}`);
     handleCloseNavMenu();
   };
-
 
   return (
     <AppBar
@@ -50,76 +57,28 @@ function Header() {
             <Avatar
               variant="square"
               src={PizzaLogo}
-              sx={{ width: 50, height: 50 }}
+              sx={{
+                height: { xs: 25, sm: 25, md: 50 },
+                width: { xs: 25, sm: 25, md: 50 },
+              }}
             />
             <Typography
               gutterBottom
               color="#AF5901"
-              sx={{ fontWeight: "600", fontSize: "25px", marginLeft: "15px" }}
+              sx={{
+                fontWeight: "600",
+                fontSize: { xs: "13px", sm: "13px", md: "25px" },
+                marginLeft: "15px",
+              }}
             >
               Pizza
             </Typography>
           </Box>
 
-          {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
-
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography> */}
-
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex" },
+              display: "flex",
               justifyContent: "center",
             }}
           >
@@ -129,11 +88,11 @@ function Header() {
                 onClick={() => handleClick(page)}
                 sx={{
                   my: 2,
-                  mx: 4,
+                  mx: { xs: 1, sm: 2, md: 4 },
                   color: activePage === page ? "#AF5901" : "black",
                   display: "block",
                   fontFamily: "Inter",
-                  fontSize: "25px",
+                  fontSize: { xs: "10px", sm: "13px", md: "25px" },
                   textTransform: "capitalize",
                 }}
               >
@@ -143,17 +102,91 @@ function Header() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+              sx={{ display: { xs: "flex", md: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: "block", md: "none" } }}
+            >
+              {!user ? (
+                <Button
+                  variant="contained"
+                  sx={{
+                    width: "168px",
+                    height: "50px",
+                    backgroundColor: "#FFF",
+                    color: "#FF890F",
+                    boxShadow: "none",
+                  }}
+                  onClick={() => {
+                    navigate("/register");
+                  }}
+                >
+                  Register
+                </Button>
+              ) : (
+                <Avatar
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    bgcolor: "#FF890F",
+                    color: "#FFF",
+                  }}
+                >
+                  {userInitials}{" "}
+                </Avatar>
+              )}
+            </Menu>
+
+            {!user ? (
               <Button
                 variant="contained"
-                style={{
+                sx={{
                   width: "168px",
                   height: "50px",
+                  display: { xs: "none", md: "flex" },
                   backgroundColor: "#FF890F",
                 }}
-                onClick={()=>{navigate('/register')}}
+                onClick={() => {
+                  navigate("/register");
+                }}
               >
                 Register
               </Button>
+            ) : (
+              <Avatar
+                sx={{
+                  width: 40,
+                  height: 40,
+                  bgcolor: "#FF890F",
+                  color: "#FFF",
+                  display: { xs: "none", md: "flex" },
+                }}
+              >
+                {userInitials}{" "}
+              </Avatar>
+            )}
           </Box>
         </Toolbar>
       </Container>

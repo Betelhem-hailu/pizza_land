@@ -29,7 +29,10 @@ export const login = createAsyncThunk(
 
 const initialState = {
   isLoggedIn: false,
-  user: null,
+  user: 
+  typeof window !== "undefined" && localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : null,
   loading: false,
   data: [],
   users: [],
@@ -54,8 +57,11 @@ const userSlice = createSlice({
       .addCase(login.fulfilled, (state, { payload }) => {
         state.isLoggedIn = true;
         state.loading = false;
-        state.user = payload.data;
+        state.user = payload.data.data;
         state.error = null;
+        if (typeof window !== "undefined") {
+          localStorage.setItem("user", JSON.stringify(payload.data.data));
+        }
       })
       .addCase(login.pending, (state) => {
         state.loading = true;

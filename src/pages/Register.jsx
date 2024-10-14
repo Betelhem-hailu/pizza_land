@@ -74,22 +74,23 @@ const Register = () => {
   return (
     <Grid2 container>
       <Grid2 item size={6} 
-      style={{
+      sx={{
         backgroundColor: "#FFA500",
-        display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        display: { xs: 'none', sm: 'none', md: 'flex' }
       }}>
         <Avatar variant="square" src={PizzaLogo} sx={{ width: 305, height: 300 }} />
       </Grid2>
       <Grid2 item size={6} 
-      style={{
-        padding: "80px",
+      sx={{
+        padding: {xs: "24px", sm: "24px", md: "80px"},
         height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        width: { xs: "100%", sm: "100%", md: "50%" }
       }}>
         <Formik
           initialValues={{

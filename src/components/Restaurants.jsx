@@ -24,9 +24,15 @@ const Restaurants = () => {
       sx={{
         overflowX: "auto",
         overflowY: "hidden",
-        height: "440px",
+        height: {xs:"177px", sm:"177px", md:"400px"},
         marginTop: "20px",
-        py: "90px",
+        padding: {
+          xs: "0px 20px",   // padding for extra small screens (mobile)
+          sm: "0px 40px",   // padding for small screens (small tablets)
+          md: "0px 40px",   // padding for medium screens (tablets)
+          lg: "0px 40px",   // padding for large screens (laptops and desktops)
+          xl: "0px 100px",  // padding for extra large screens
+        },
         pl: "40px",
         background:
           "linear-gradient(180deg, rgba(250, 126, 0, 0) 0%, rgba(250, 126, 0, 0.2) 60.5%, #FFF8F1 100%)",
@@ -35,9 +41,9 @@ const Restaurants = () => {
       <Typography
         variant="h5"
         gutterBottom
-        style={{
+        sx={{
           color: "#00000080",
-          fontSize: "50px",
+          fontSize: {xs:"25px", sm: "25px", md: "50px"},
           fontFamily: "Inter",
           marginTop: "20px",
         }}
@@ -71,8 +77,8 @@ const Restaurants = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                width: "574px",
-                height: "154px",
+                width: {xs:"auto" ,sm:"auto", md:"574px"},
+                height: {xs:"90px" ,sm: "90px", md:"154px"},
                 boxShadow: "none",
                 padding: "20px 30px",
               }}
@@ -87,50 +93,52 @@ const Restaurants = () => {
                     display: "flex",
                     flexDirection: "column",
                     alignContent: "center",
-                    width: "235px",
+                    width: {xs: "120px", sm:"120px", md:"235px"},
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                      gap: "10px",
-                    }}
-                  >
-                    <Avatar
-                      src={restaurant.logo}
-                      alt={restaurant.name}
-                      sx={{ width: 50, height: 50 }}
-                    />
-                    <Typography
-                      variant="h6"
+                    <Box
                       sx={{
-                        fontFamily: "Roboto",
-                        fontSize: "20px",
-                        fontWeight: 700,
-                        lineHeight: "18.94px",
-                        letterSpacing: "0.03em",
-                        textAlign: "left",
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "10px",
+                        gap: "10px",
                       }}
                     >
-                      {restaurant.name}
+                      <Avatar
+                        src={restaurant.logo}
+                        alt={restaurant.name}
+                        sx={{ width: {xs:25, sm:25, md:50}, height: {xs:25, sm:25, md:50} }}
+                      />
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontFamily: "Roboto",
+                          fontSize: {xs:"12px", sm:"12px", md:"20px"},
+                          fontWeight: 700,
+                          lineHeight: "18.94px",
+                          letterSpacing: "0.03em",
+                          textAlign: "left",
+                        }}
+                      >
+                        {restaurant.name}
+                      </Typography>
+                    </Box>
+                  
+                    <Typography
+                      variant="body"
+                      sx={{
+                        fontFamily: "Inter",
+                        fontSize: {xs:"10px", sm:"10px", md:"15px"},
+                        fontWeight: 400,
+                        lineHeight: "15.75px",
+                        textAlign: "left",
+                        color: "#00000080",
+                      }}
+                    >
+                      {restaurant.location}
                     </Typography>
-                  </Box>
-                  <Typography
-                    variant="body"
-                    sx={{
-                      fontFamily: "Inter",
-                      fontSize: "15px",
-                      fontWeight: 400,
-                      lineHeight: "15.75px",
-                      textAlign: "left",
-                      color: "#00000080",
-                    }}
-                  >
-                    {restaurant.location}
-                  </Typography>
                 </Box>
+
                 <Box
                   sx={{
                     display: "flex",
@@ -138,8 +146,8 @@ const Restaurants = () => {
                     alignItems: "center",
                     marginLeft: "15px",
                     backgroundColor: "#0080000D",
-                    width: "262px",
-                    height: "108px",
+                    width: {xs: "140px", sm: "140px", md: "262px"},
+                    height: {xs: "60px", sm: "60px", md: "108px"},
                     padding: "0px 15px 0px 15px",
                     gap: "20px",
                     borderRadius: "10px 0px 0px 0px",
@@ -147,31 +155,33 @@ const Restaurants = () => {
                 >
                   <BatteryCharging80Icon
                     sx={{
-                      fontSize: "50px",
+                      fontSize: {xs: "25px", sm: "25px", md:"50px"},
                       color: "#FF8100",
                       backgroundColor: "#FF810033",
                       borderRadius: "100px",
-                      width: "80px",
-                      height: "80px",
+                      width: {xs: "40px", sm: "40px", md: "80px"},
+                      height: {xs: "40px", sm: "40px", md: "80px"}
                     }}
                   />
-                  <Typography variant="body2" color="textSecondary">
+                  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "left", height: "40px"}}>
+                  <Typography variant="body2" color="textSecondary" sx={{ fontSize: {xs: "8px", sm: "8px", md: "12px"}}}>
                     Number of orders:{" "}
-                    <span
-                      style={{
+                  </Typography>
+                  <Typography
+                    component="span" 
+                      sx={{
                         color: "#FF8100",
                         fontFamily: "Roboto",
-                        fontSize: "50px",
+                        fontSize: {xs:"20px", sm:"20px" ,md:"50px"},
                         fontWeight: 700,
-                        lineHeight: "47.34px",
-                        letterSpacing: "0.03em",
-                        textAlign: "left",
+                        textAlign: "left"
                       }}
                     >
                       {restaurant.ordersCount}
-                    </span>
-                  </Typography>
+                    </Typography>
+                    </Box>
                 </Box>
+
               </CardContent>
             </Card>
           </Box>
