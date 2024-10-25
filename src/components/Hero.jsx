@@ -25,8 +25,12 @@ const StyledImage = styled.img`
   }
 `;
 
+// params: {
+//   search: search || undefined,
+// },
 
-const Hero = () => {
+const Hero = ({search, setSearch}) => {
+  
   return (
     <Box 
     sx={{
@@ -78,6 +82,8 @@ const Hero = () => {
 
         <TextField
           placeholder="Search for pizza"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           sx={{
             "& .MuiInputBase-root": {
               marginTop: {xs: "25px", sm: "25px", md:"50px"},

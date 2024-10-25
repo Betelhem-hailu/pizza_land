@@ -17,9 +17,9 @@ export const getMenuById = createAsyncThunk(
 //get all menus
 export const getAllMenus = createAsyncThunk(
   "menu/getAllMenus",
-  async (_, { rejectWithValue }) => {
+  async (search, { rejectWithValue }) => {
     try {
-      const response = await menuService.getAllMenus();
+      const response = await menuService.getAllMenus(search);
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -86,6 +86,7 @@ const menuSlice = createSlice({
       })
       .addCase(getAllMenus.rejected, (state, { payload }) => {
         state.error = payload;
+        state.menuData = [];
       })
       .addCase(getPopularMenus.pending, (state) => {
         state.loading = true;

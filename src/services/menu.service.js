@@ -12,9 +12,11 @@ const getMenuById = (id) => {
 };
 
 //get all menus
-const getAllMenus = () => {
+const getAllMenus = (search) => {
   return axios
-    .get(API_URI + "/getAllMenus", { withCredentials: true })
+    .get(API_URI + "/getAllMenus", {params: {
+      search: search || '',
+      }, withCredentials: true })
     .then((response) => {
       return response.data;
     });
@@ -23,7 +25,7 @@ const getAllMenus = () => {
 //get popular menus
 const getPopularMenus = () => {
   return axios
-    .get(API_URI + "/getPopularMenus", { withCredentials: true })
+    .get(API_URI + "/getPopularMenus",{withCredentials: true })
     .then((response) => {
       return response.data;
     });
