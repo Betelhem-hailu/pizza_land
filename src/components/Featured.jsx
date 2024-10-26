@@ -84,7 +84,7 @@ const Featured = () => {
                   borderRadius: "40px",
                 }}
               >
-                <CardContent sx={{flex: {xs:0.8 ,md:1} , width: "50%", padding: { xs: "30px", sm: "30px", md: "70px 40px" }}}>
+                <CardContent sx={{flex: {xs:0.8 , md:1 } , width: "50%", padding: { xs: "30px", sm: "30px", md: "70px 40px" }}}>
                   <Typography variant="h4" component="h2" gutterBottom sx={{
                     color: "#ffffff",
                     fontWeight: 700,
@@ -92,7 +92,7 @@ const Featured = () => {
                     fontFamily: "Roboto",
                   }}>
                     {feature.title}
-                    <span style={{ color: "orange" }}>50% Off</span>
+                    <span style={{ color: "orange" }}>  50% Off</span>
                   </Typography>
                   <Typography variant="body1" gutterBottom sx={{
                     color: "#ffffff",
@@ -123,7 +123,7 @@ const Featured = () => {
                   component="img"
                   image={feature.image}
                   alt="Featured Pizza"
-                  style={{width: {xs:"800px" ,md:"50%"}, objectFit: "cover", marginRight: "-130px"}}
+                  sx={{width: "50%" , objectFit: "cover", marginRight: "-140px"}}
                 />
               </Card>
               </Box>

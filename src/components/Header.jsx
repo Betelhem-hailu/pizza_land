@@ -8,9 +8,9 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { IconButton, Menu } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Menu } from "@mui/material";
+import { logout } from "../slices/user.slice";
 
 const pages = ["Home", "Orders", "Who we are"];
 
@@ -18,7 +18,9 @@ function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [activePage, setActivePage] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  console.log(user);
   const userInitials = user && user?.name
     .split(" ")
     .map((n) => n[0])
@@ -37,6 +39,11 @@ function Header() {
     navigate("/" + `${page.toLowerCase()}`);
     handleCloseNavMenu();
   };
+
+  const handleLogout = () => {
+    dispatch(logout());
+};
+
 
   return (
     <AppBar
@@ -102,33 +109,6 @@ function Header() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-              sx={{ display: { xs: "flex", md: "none" } }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
-            >
               {!user ? (
                 <Button
                   variant="contained"
@@ -140,13 +120,18 @@ function Header() {
                     boxShadow: "none",
                   }}
                   onClick={() => {
-                    navigate("/register");
+                    navigate("/login");
                   }}
                 >
-                  Register
+                  Login
                 </Button>
               ) : (
+                <>
                 <Avatar
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
                   sx={{
                     width: 40,
                     height: 40,
@@ -156,37 +141,34 @@ function Header() {
                 >
                   {userInitials}{" "}
                 </Avatar>
+                <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}>
+                  <Button
+                  variant="contained"
+                  sx={{
+                  width: "100px",
+                  height: "30px",
+                  margin: "auto",
+                  backgroundColor: "#FFF",
+                  color: "#FF890F",
+                  boxShadow: "none",
+                }}
+                onClick={handleLogout}>logout</Button>
+                </Menu>
+                </>
               )}
-            </Menu>
-
-            {!user ? (
-              <Button
-                variant="contained"
-                sx={{
-                  width: "168px",
-                  height: "50px",
-                  display: { xs: "none", md: "flex" },
-                  backgroundColor: "#FF890F",
-                }}
-                onClick={() => {
-                  navigate("/register");
-                }}
-              >
-                Register
-              </Button>
-            ) : (
-              <Avatar
-                sx={{
-                  width: 40,
-                  height: 40,
-                  bgcolor: "#FF890F",
-                  color: "#FFF",
-                  display: { xs: "none", md: "flex" },
-                }}
-              >
-                {userInitials}{" "}
-              </Avatar>
-            )}
           </Box>
         </Toolbar>
       </Container>

@@ -9,7 +9,20 @@ const OrderHistory = () => {
   const { data} = useSelector(state => state.order);
   const dispatch = useDispatch();
 
-  const orders = data.map(order => ({
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'pending':
+        return '#FF890F';
+      case 'ready':
+        return '#FF0000';
+      case 'delivered':
+        return '#01C550'; 
+      default:
+        return 'black'; 
+    }
+  };
+
+  const orders = data?.map(order => ({
     orderId: order.orderId,
     createdAt: order.createdAt,
     status: order.status,
@@ -160,13 +173,14 @@ const OrderHistory = () => {
                     variant="subtitle1"
                     sx={{
                       marginTop: "10px",
-                      color: "#FF890F",
+                      color: getStatusColor(pizza.status),
                       fontFamily: "Roboto",
                       fontSize: "32px",
                       fontWeight: 700,
                       lineHeight: "44.55px",
                       letterSpacing: "0.03em",
                       textAlign: "left",
+                      textTransform: "capitalize"
                     }}
                   >{pizza.status}</Typography>
                 </Box>

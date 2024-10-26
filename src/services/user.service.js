@@ -28,10 +28,17 @@ const login = async (email, password) => {
     });
 };
 
+const logout = async() => {
+  return axios.post(API_URI + '/logout', { withCredentials: true})
+  .then(() => {
+      localStorage.removeItem("userInfo");
+  });
+};
 
 const userService = {
   register,
   login,
+  logout
 };
 
 export default userService;

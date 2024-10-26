@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllMenus, getMenuById } from "../slices/menu.slice";
 import { useLocation } from "react-router-dom";
 import { placeOrder } from "../slices/order.slice";
+import { Header } from "../components";
 
 const PizzaOrder = () => {
   const location = useLocation();
@@ -37,7 +38,9 @@ const PizzaOrder = () => {
 
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
+  const {user} = useSelector(state=>state.user)
   const { menuData } = useSelector(state=> state.menu);
+  console.log(user)
 
   useEffect(()=>{
     const fetchMenuID = async (pizzaId) => {
@@ -129,6 +132,8 @@ const PizzaOrder = () => {
   };
 
   return (
+    <> 
+    <Header />
     <Box sx={{ padding: 2, backgroundColor: "#f9f9f9" }}>
       {selectedPizza && (
       <Box sx={{ display: "flex", gap: "70px", alignItems: "center", flexDirection: {xs:"column", sm:"column", md:"row"} }}>
@@ -384,6 +389,7 @@ const PizzaOrder = () => {
                 }
 
                 onClick={()=>{orderPizza()}}
+                disabled={!user}
               >
                 Order
               </Button>
@@ -549,6 +555,7 @@ const PizzaOrder = () => {
       </DialogContent>
       </Dialog>
     </Box>
+    </>
   );
 };
 

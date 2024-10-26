@@ -26,12 +26,15 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk("user/logout", async () => {
+  userService.logout();
+});
 
 const initialState = {
   isLoggedIn: false,
   user: 
-  typeof window !== "undefined" && localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
+  typeof window !== "undefined" && localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
   : null,
   loading: false,
   data: [],
@@ -60,7 +63,7 @@ const userSlice = createSlice({
         state.user = payload.data.data;
         state.error = null;
         if (typeof window !== "undefined") {
-          localStorage.setItem("user", JSON.stringify(payload.data.data));
+          localStorage.setItem("userInfo", JSON.stringify(payload.data.data));
         }
       })
       .addCase(login.pending, (state) => {
@@ -72,6 +75,11 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = null;
         state.error = payload;
+      })
+      .addCase(logout.fulfilled, state => {
+        state.isLoggedIn = false;
+        state.user = null;
+        state.error = null;
       })
   },
 });
